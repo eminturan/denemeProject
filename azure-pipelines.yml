@@ -46,6 +46,7 @@ steps:
     openshiftService: 'ocp-test2'
     cmd: 'get po -n $(namespace)'
     uselocalOc: true
+  enabled: false
     
 - task: CmdLine@2
   displayName: Helm Deploy Commands 
