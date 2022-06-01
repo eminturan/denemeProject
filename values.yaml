@@ -1,0 +1,80 @@
+# Default values for denemeproject.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Common controls
+environment: dev
+application: denemeproject
+containerPort: 8080
+
+# Service controls
+service:
+  name: denemeproject
+  type: ClusterIP
+  port: 8080
+
+# Route controls
+route:
+  name: denemeproject-route
+  dev:
+    hostName: denemeproject-dev.apps.ocptest.dataserv.local
+  test:
+    hostName: denemeproject-test.apps.ocptest.dataserv.local
+  preprod:
+    hostName: denemeproject-preprod.apps.ocptest.dataserv.local
+  prod:
+    hostName: denemeproject-prod.apps.ocptest.dataserv.local
+
+# Deployment controls
+restartPolicy: Always
+
+replicas: 1
+resources:
+  requests:
+    cpu: 100m
+    memory: "128Mi"
+  limits:
+    cpu: 300m
+    memory: "512Mi"
+
+image:
+  pullPolicy: Always
+  dev:
+    repository: eminturan/msrest
+    tag: 13
+  test:
+    repository: eminturan/test/denemeproject
+    tag: testlatest
+  preprod:
+    repository: eminturan/preprod/denemeproject
+    tag: preprodlatest
+  prod:
+    repository: eminturan/prod/denemeproject
+    tag: prodlatest
+
+envVar:
+  configmap:
+    common:
+      #APPDYNAMICS_AGENT_REUSE_NODE_NAME: true
+      #APPDYNAMICS_AGENT_REUSE_NODE_NAME_PREFIX: Instance
+    dev:
+      SPRING_PROFILES_ACTIVE: emin
+      TZ: Europe/Istanbul
+    test:
+      SPRING_PROFILES_ACTIVE: test
+      TZ: Europe/Istanbul
+    preprod:
+      SPRING_PROFILES_ACTIVE: preprod
+      TZ: Europe/Istanbul
+    prod:
+      SPRING_PROFILES_ACTIVE: prod
+      TZ: Europe/Istanbul
+  secret:
+    dev:
+      #db_pass: 123123
+    test:
+      #db_pass: 123123
+    preprod:
+      #db_pass: 123123
+    prod:
+      #db_pass: 123123
