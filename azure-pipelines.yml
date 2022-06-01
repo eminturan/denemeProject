@@ -19,7 +19,7 @@ steps:
     dockerRegistryConnection: 'docker_eminturan'
     defaultContext: false
     context: .
-  enabled: true
+  enabled: false
 
 - task: Docker@0
   displayName: 'Push an image'
@@ -27,4 +27,4 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerRegistryConnection: 'docker_eminturan'
     action: 'Push an image'
-  enabled: true
+  enabled: false
