@@ -21,7 +21,7 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'clean install -Dmaven.test.skip=true'
     publishJUnitResults: false
-  enabled: false
+  enabled: true
 
 - task: Docker@0
   displayName: 'Build an image'
@@ -30,7 +30,7 @@ steps:
     dockerRegistryConnection: 'docker_eminturan'
     defaultContext: false
     context: .
-  enabled: false
+  enabled: true
 
 - task: Docker@0
   displayName: 'Push an image'
@@ -38,7 +38,7 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerRegistryConnection: 'docker_eminturan'
     action: 'Push an image'
-  enabled: false
+  enabled: true
 
 - task: oc-cmd@2
   inputs:
@@ -46,7 +46,7 @@ steps:
     openshiftService: 'ocp-test2'
     cmd: 'get po -n $(namespace)'
     uselocalOc: true
-  enabled: false
+  enabled: true
     
 - task: CmdLine@2
   displayName: Helm Deploy Commands 
