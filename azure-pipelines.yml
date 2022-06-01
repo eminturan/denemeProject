@@ -4,6 +4,16 @@ pool:
 
 #Your build pipeline references an undefined variable named ‘Parameters.mavenPOMFile’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
+variables:
+- name: namespace
+  value: deneme-dev
+- name: app_name
+  value: denemeproject
+- name: helm_path
+  value: /mnt/c/Users/Muhammed Emin Turan/Desktop/Work/Azure-Training/backend-api-0.1.0.tgz
+- name: project_env
+  value: dev
+
 steps:
 - task: Maven@3
   displayName: 'Maven pom.xml'
@@ -19,7 +29,7 @@ steps:
     dockerRegistryConnection: 'docker_eminturan'
     defaultContext: false
     context: .
-  enabled: false
+  enabled: true
 
 - task: Docker@0
   displayName: 'Push an image'
@@ -27,11 +37,17 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerRegistryConnection: 'docker_eminturan'
     action: 'Push an image'
-  enabled: false
+  enabled: true
 
 - task: oc-cmd@2
   inputs:
     connectionType: 'OpenShift Connection Service'
     openshiftService: 'ocp-test2'
-    cmd: 'get po -n deneme-dev'
+    cmd: 'get po -n $(namespace)'
     uselocalOc: true
+    
+- task: CmdLine@2
+  displayName: Helm Deploy Commands 
+  inputs:
+    script: |
+      helm upgrade -n $(namespace) --install $(app_display_name) $(helm_path) -f values.yaml --set image.$(project_env).tag=$(Build.BuildId)
