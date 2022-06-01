@@ -54,4 +54,4 @@ steps:
     script: |
       pwd
       ls
-      helm upgrade -n $(namespace) --install $(app_name) $(helm_path) -f $(Build.Repository.LocalPath)/values.yaml --set image.$(project_env).tag=$(Build.BuildId)
+      "helm upgrade -n $(namespace) --install $(app_name) $(helm_path) -f $(Build.Repository.LocalPath)/values.yaml --set image.$(project_env).tag=$(Build.BuildId)"
