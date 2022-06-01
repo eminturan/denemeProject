@@ -50,4 +50,4 @@ steps:
   displayName: Helm Deploy Commands 
   inputs:
     script: |
-      helm upgrade -n $(namespace) --install $(app_display_name) $(helm_path) -f values.yaml --set image.$(project_env).tag=$(Build.BuildId)
+      helm upgrade -n $(namespace) --install $(app_name) $(helm_path) -f values.yaml --set image.$(project_env).tag=$(Build.BuildId)
