@@ -21,6 +21,7 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'clean install -Dmaven.test.skip=true'
     publishJUnitResults: false
+  enabled: false
 
 - task: Docker@0
   displayName: 'Build an image'
@@ -29,7 +30,7 @@ steps:
     dockerRegistryConnection: 'docker_eminturan'
     defaultContext: false
     context: .
-  enabled: true
+  enabled: false
 
 - task: Docker@0
   displayName: 'Push an image'
@@ -37,7 +38,7 @@ steps:
     containerregistrytype: 'Container Registry'
     dockerRegistryConnection: 'docker_eminturan'
     action: 'Push an image'
-  enabled: true
+  enabled: false
 
 - task: oc-cmd@2
   inputs:
@@ -50,4 +51,6 @@ steps:
   displayName: Helm Deploy Commands 
   inputs:
     script: |
+      pwd
+      ls
       helm upgrade -n $(namespace) --install $(app_name) $(helm_path) -f values.yaml --set image.$(project_env).tag=$(Build.BuildId)
