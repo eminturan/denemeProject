@@ -40,8 +40,8 @@ resources:
 image:
   pullPolicy: Always
   dev:
-    repository: eminturan/msrest
-    tag: 13
+    repository: eminturan/denemeproject
+    tag: devlatest
   test:
     repository: eminturan/test/denemeproject
     tag: testlatest
