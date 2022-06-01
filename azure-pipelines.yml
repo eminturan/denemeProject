@@ -10,7 +10,7 @@ variables:
 - name: app_name
   value: denemeproject
 - name: helm_path
-  value: '/mnt/c/Users/Muhammed Emin Turan/Desktop/Work/Azure-Training/backend-api-0.1.0.tgz'
+  value: /mnt/c/Users/Muhammed Emin Turan/Desktop/Work/Azure-Training/backend-api-0.1.0.tgz
 - name: project_env
   value: dev
 
@@ -54,4 +54,4 @@ steps:
     script: |
       pwd
       ls
-      "helm upgrade -n $(namespace) --install $(app_name) $(helm_path) -f $(Build.Repository.LocalPath)/values.yaml --set image.$(project_env).tag=$(Build.BuildId)"
+      helm upgrade -n $(namespace) --install $(app_name) "$(helm_path)" -f "$(Build.Repository.LocalPath)/values.yaml" --set image.$(project_env).tag=$(Build.BuildId)
