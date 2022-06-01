@@ -1,0 +1,30 @@
+pool:
+  name: DenemeLocalPool
+  demands: maven
+
+#Your build pipeline references an undefined variable named ‘Parameters.mavenPOMFile’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+steps:
+- task: Maven@3
+  displayName: 'Maven pom.xml'
+  inputs:
+    mavenPomFile: '$(Parameters.mavenPOMFile)'
+    goals: 'clean install -Dmaven.test.skip=true'
+    publishJUnitResults: false
+
+- task: Docker@0
+  displayName: 'Build an image'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryConnection: 'docker_eminturan'
+    defaultContext: false
+    context: .
+  enabled: false
+
+- task: Docker@0
+  displayName: 'Push an image'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryConnection: 'docker_eminturan'
+    action: 'Push an image'
+  enabled: false

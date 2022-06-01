@@ -58,7 +58,7 @@ envVar:
       #APPDYNAMICS_AGENT_REUSE_NODE_NAME: true
       #APPDYNAMICS_AGENT_REUSE_NODE_NAME_PREFIX: Instance
     dev:
-      SPRING_PROFILES_ACTIVE: emin
+      SPRING_PROFILES_ACTIVE: "asd"
       TZ: Europe/Istanbul
     test:
       SPRING_PROFILES_ACTIVE: test
