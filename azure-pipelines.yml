@@ -27,7 +27,7 @@ stages:
 - stage: CodeBuildStage
   displayName: Code Build Stage
   jobs:
-  - job: Code Build Job
+  - job: Code_Build_Job
     displayName: Code Build Job
     steps:
       - checkout: templates
