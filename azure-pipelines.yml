@@ -57,8 +57,6 @@ stages:
   - job: Docker_Build_Job
     displayName: Docker Build Job
     steps:
-      - checkout: templates
-      - checkout: main
       - template: ./docker-build.yml@templates
         parameters:
            workingDirectory: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
