@@ -4,6 +4,15 @@ pool:
 
 resources:
   repositories:
+  - repository: main
+    type: github
+    name: eminturan/denemeproject
+    trigger:
+      branches:
+        include:
+        - main
+    endpoint: eminturan
+
   - repository: templates
     type: github
     name: eminturan/azure-templates
@@ -31,6 +40,7 @@ stages:
     displayName: Code Build Job
     steps:
       - checkout: templates
+      - checkout: main
       - template: ./code-build.yml@templates
         parameters:
            workingDirectory: '$(Build.Repository.LocalPath)'
