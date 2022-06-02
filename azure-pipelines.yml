@@ -24,13 +24,18 @@ variables:
 - name: namespace
   value: deneme-dev
 - name: app_name
-  value: denemeproject
+  value: 'deneme-project'
 - name: helm_path
   value: backend-api-0.1.0.tgz
 - name: project_env
   value: dev
 - name: toolset
   value: 'maven'
+- name: repo_name
+  value: denemeproject
+- name: registry_url
+  value: 'eminturan'
+
 
 stages:
 - stage: CodeBuildStage
@@ -43,5 +48,19 @@ stages:
       - checkout: main
       - template: ./code-build.yml@templates
         parameters:
-           workingDirectory: '$(Build.Repository.LocalPath)/${{ variables.app_name }}'
+           workingDirectory: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
            toolset: ${{ variables.toolset }}
+
+- stage: DockerBuildStage
+  displayName: Docker Build Stage
+  jobs:
+  - job: Docker_Build_Job
+    displayName: Docker Build Job
+    steps:
+      - checkout: templates
+      - checkout: main
+      - template: ./docker-build.yml@templates
+        parameters:
+           workingDirectory: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
+           registry_url: '${{ variables.registry_url }}'
+           image_name: '${{ variables.app_name }}'
