@@ -43,5 +43,5 @@ stages:
       - checkout: main
       - template: ./code-build.yml@templates
         parameters:
-           workingDirectory: '$(Build.Repository.LocalPath)'
+           workingDirectory: '$(Build.Repository.LocalPath)/$(Build.Repository.Name)'
            toolset: ${{ variables.toolset }}
