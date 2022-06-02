@@ -24,7 +24,7 @@ variables:
   value: 'maven'
 
 stages:
-- stage: Code Build Stage
+- stage: CodeBuildStage
   displayName: Code Build Stage
   jobs:
   - job: Code Build Job
