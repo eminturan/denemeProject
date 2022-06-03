@@ -1,6 +1,5 @@
 pool:
   name: DenemeLocalPool
-  demands: maven
 
 resources:
   repositories:
@@ -44,6 +43,8 @@ stages:
   displayName: Code Build Stage
   jobs:
   - job: Code_Build_Job
+    pool:
+      name: DenemeLocalPool
     displayName: Code Build Job
     steps:
       - checkout: templates
@@ -57,6 +58,8 @@ stages:
   displayName: Docker Build Stage
   jobs:
     - job: Docker_Build_Job
+      pool:
+        name: DenemeLocalPool
       displayName: Docker Build Job
       steps:
         - template: ./docker-build.yml@templates
