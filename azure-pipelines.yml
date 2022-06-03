@@ -92,6 +92,27 @@ stages:
            registry_username: '$(registry_username)'
            image_name: '${{ variables.app_name }}'
 
+
+- stage: DeployToOpenshiftStage
+  displayName: Deploy To Openshift Stage
+  dependsOn: DockerPushStage
+  condition: and(succeeded(), eq(variables.isMain, true))
+  jobs:
+  - job: DeployToOpenshiftJob
+    pool:
+      name: DenemeLocalPool
+    displayName: Deploy To Openshift Job
+    steps:
+      - template: ./deploy-ocp.yml@templates
+        parameters:
+           workingDirectory: '${{ variables.working_path }}'
+           registry_url: '${{ variables.registry_url }}'
+           image_name: '${{ variables.app_name }}'
+           app_name: '${{ variables.app_name }}'
+           namespace: '${{ variables.namespace }}'
+           helm_path: '${{ variables.helm_path }}'
+           project_env: '${{ variables.project_env }}'
+
 #- stage: DockerBuildStage
 #  displayName: Docker Build Stage
 #  jobs:
