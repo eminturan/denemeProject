@@ -76,7 +76,7 @@ stages:
 
 - stage: DockerPushStage
   displayName: Docker Push Stage
-  dependsOn: DockerPushStage
+  dependsOn: DockerBuildStage
   condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
   - job: DockerPushJob
