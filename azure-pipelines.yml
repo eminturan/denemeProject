@@ -55,6 +55,7 @@ stages:
            toolset: ${{ variables.toolset }}
       - template: ./docker-build.yml@templates
         parameters:
+           workingDirectory: '${{ variables.working_path }}'
            registry_url: '${{ variables.registry_url }}'
            image_name: '${{ variables.app_name }}'
 
