@@ -53,14 +53,13 @@ stages:
            workingDirectory: '${{ variables.working_path }}'
            toolset: ${{ variables.toolset }}
 
-#- stage: DockerBuildStage
-#  displayName: Docker Build Stage
-#  jobs:
+- stage: DockerBuildStage
+  displayName: Docker Build Stage
+  jobs:
   - job: Docker_Build_Job
     displayName: Docker Build Job
     steps:
       - template: ./docker-build.yml@templates
         parameters:
-           workingDirectory: '${{ variables.working_path }}'
            registry_url: '${{ variables.registry_url }}'
            image_name: '${{ variables.app_name }}'
