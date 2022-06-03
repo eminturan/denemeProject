@@ -59,6 +59,7 @@ stages:
 
 - stage: DockerBuildStage
   displayName: Docker Build Stage
+  dependsOn: CodeBuildStage
   condition: and(always(), eq(variables.isMain, true))
   jobs:
   - job: DockerBuildJob
