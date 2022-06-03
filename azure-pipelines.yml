@@ -68,6 +68,7 @@ stages:
       displayName: Copy Artifact
       workspace:
         clean: all
+      environment: 'env'
       strategy:
         runOnce:
           deploy:
