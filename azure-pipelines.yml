@@ -64,8 +64,8 @@ stages:
 - stage: DockerBuildStage
   displayName: Docker Build Stage
   jobs:
-    - deployment: Docker_Build_Job
-      displayName: Docker Build Job
+    - deployment: Copy_Artifact
+      displayName: Copy Artifact
       workspace:
         clean: all
       strategy:
