@@ -52,14 +52,45 @@ stages:
         parameters:
            workingDirectory: '${{ variables.working_path }}'
            toolset: ${{ variables.toolset }}
+  - job: Publish
+      steps:
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(Build.SourcesDirectory)'
+          artifact: 'drop'
+          publishLocation: 'pipeline'
 
 - stage: DockerBuildStage
   displayName: Docker Build Stage
   jobs:
-  - job: Docker_Build_Job
-    displayName: Docker Build Job
-    steps:
-      - template: ./docker-build.yml@templates
-        parameters:
-           registry_url: '${{ variables.registry_url }}'
-           image_name: '${{ variables.app_name }}'
+    - deployment: Docker_Build_Job
+      displayName: Docker Build Job
+      workspace:
+        clean: all
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: CopyFiles@2
+              inputs:
+                SourceFolder: '$(Build.SourcesDirectory)'
+                Contents: '**'
+                TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - job: Docker_Build_Job
+        displayName: Docker Build Job
+        steps:
+          - template: ./docker-build.yml@templates
+            parameters:
+               registry_url: '${{ variables.registry_url }}'
+               image_name: '${{ variables.app_name }}'
+
+#- stage: DockerBuildStage
+#  displayName: Docker Build Stage
+#  jobs:
+#  - job: Docker_Build_Job
+#    displayName: Docker Build Job
+#    steps:
+#      - template: ./docker-build.yml@templates
+#        parameters:
+#           registry_url: '${{ variables.registry_url }}'
+#           image_name: '${{ variables.app_name }}'
