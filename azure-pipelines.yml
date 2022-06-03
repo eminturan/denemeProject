@@ -53,9 +53,9 @@ stages:
            workingDirectory: '${{ variables.working_path }}'
            toolset: ${{ variables.toolset }}
 
-- stage: DockerBuildStage
-  displayName: Docker Build Stage
-  jobs:
+#- stage: DockerBuildStage
+#  displayName: Docker Build Stage
+#  jobs:
   - job: Docker_Build_Job
     displayName: Docker Build Job
     steps:
