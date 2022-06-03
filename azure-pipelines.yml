@@ -53,6 +53,11 @@ stages:
         parameters:
            workingDirectory: '${{ variables.working_path }}'
            toolset: ${{ variables.toolset }}
+  - job: Code_Build_Job
+    pool:
+      name: DenemeLocalPool
+    displayName: Code Build Job
+    steps:
       - template: ./docker-build.yml@templates
         parameters:
            workingDirectory: '${{ variables.working_path }}'
