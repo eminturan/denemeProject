@@ -36,8 +36,8 @@ variables:
 - name: registry_url
   value: 'eminturan'
 - name: working_path
-  value: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
-
+#  value: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
+  value: '$(Build.SourcesDirectory)/${{ variables.repo_name }}'
 
 stages:
 - stage: CodeBuildStage
@@ -52,26 +52,10 @@ stages:
         parameters:
            workingDirectory: '${{ variables.working_path }}'
            toolset: ${{ variables.toolset }}
-  - job: Publish
-    displayName: Publish
-    steps:
-    - task: PublishPipelineArtifact@1
-      inputs:
-        targetPath: '$(Build.SourcesDirectory)'
-        artifact: 'drop'
-        publishLocation: 'pipeline'
 
 - stage: DockerBuildStage
   displayName: Docker Build Stage
   jobs:
-    - job: Copy_Artifact
-      displayName: Copy Artifact
-      steps:
-      - task: CopyFiles@2
-        inputs:
-          SourceFolder: '$(Build.SourcesDirectory)'
-          Contents: '**'
-          TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - job: Docker_Build_Job
       displayName: Docker Build Job
       steps:
