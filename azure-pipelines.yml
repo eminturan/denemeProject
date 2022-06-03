@@ -37,6 +37,8 @@ variables:
 - name: working_path
   value: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
 #  value: '$(Build.SourcesDirectory)/${{ variables.repo_name }}'
+- name: isMain
+  value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
 
 stages:
 - stage: CodeBuildStage
@@ -53,6 +55,12 @@ stages:
         parameters:
            workingDirectory: '${{ variables.working_path }}'
            toolset: ${{ variables.toolset }}
+
+
+- stage: CodeBuildStage
+  displayName: Code Build Stage
+  condition: and(always(), eq(variables.isMain, true))
+  jobs:
   - job: DockerBuildJob
     pool:
       name: DenemeLocalPool
