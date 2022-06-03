@@ -53,19 +53,11 @@ stages:
         parameters:
            workingDirectory: '${{ variables.working_path }}'
            toolset: ${{ variables.toolset }}
+      - template: ./docker-build.yml@templates
+        parameters:
+           registry_url: '${{ variables.registry_url }}'
+           image_name: '${{ variables.app_name }}'
 
-- stage: DockerBuildStage
-  displayName: Docker Build Stage
-  jobs:
-    - job: Docker_Build_Job
-      pool:
-        name: DenemeLocalPool
-      displayName: Docker Build Job
-      steps:
-        - template: ./docker-build.yml@templates
-          parameters:
-             registry_url: '${{ variables.registry_url }}'
-             image_name: '${{ variables.app_name }}'
 
 #- stage: DockerBuildStage
 #  displayName: Docker Build Stage
