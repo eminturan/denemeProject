@@ -17,6 +17,10 @@ resources:
     name: eminturan/azure-templates
     endpoint: eminturan
 
+steps:
+  - checkout: templates
+  - checkout: main
+
 #Your build pipeline references an undefined variable named ‘Parameters.mavenPOMFile’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
 variables:
@@ -49,8 +53,6 @@ stages:
       name: DenemeLocalPool
     displayName: Code Build Job
     steps:
-      - checkout: templates
-      - checkout: main
       - template: ./code-build.yml@templates
         parameters:
            workingDirectory: '${{ variables.working_path }}'
@@ -76,7 +78,7 @@ stages:
 
 - stage: DockerPushStage
   displayName: Docker Push Stage
-  dependsOn: DockerBuildStage
+  dependsOn: DockerPushStage
   condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
   - job: DockerPushJob
