@@ -78,12 +78,12 @@ stages:
                 Contents: '**'
                 TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - job: Docker_Build_Job
-        displayName: Docker Build Job
-        steps:
-          - template: ./docker-build.yml@templates
-            parameters:
-               registry_url: '${{ variables.registry_url }}'
-               image_name: '${{ variables.app_name }}'
+      displayName: Docker Build Job
+      steps:
+        - template: ./docker-build.yml@templates
+          parameters:
+             registry_url: '${{ variables.registry_url }}'
+             image_name: '${{ variables.app_name }}'
 
 #- stage: DockerBuildStage
 #  displayName: Docker Build Stage
