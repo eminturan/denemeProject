@@ -25,7 +25,7 @@ variables:
 - name: app_name
   value: 'deneme-project'
 - name: helm_path
-  value: backend-api-0.1.0.tgz
+  value: backend-api-0.0.1.tgz
 - name: project_env
   value: dev
 - name: toolset
