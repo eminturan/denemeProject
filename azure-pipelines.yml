@@ -64,20 +64,14 @@ stages:
 - stage: DockerBuildStage
   displayName: Docker Build Stage
   jobs:
-    - deployment: Copy_Artifact
+    - job: Copy_Artifact
       displayName: Copy Artifact
-      workspace:
-        clean: all
-      environment: 'env'
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: CopyFiles@2
-              inputs:
-                SourceFolder: '$(Build.SourcesDirectory)'
-                Contents: '**'
-                TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      steps:
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: '$(Build.SourcesDirectory)'
+          Contents: '**'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - job: Docker_Build_Job
       displayName: Docker Build Job
       steps:
@@ -85,7 +79,6 @@ stages:
           parameters:
              registry_url: '${{ variables.registry_url }}'
              image_name: '${{ variables.app_name }}'
-             environment: 'env'
 
 #- stage: DockerBuildStage
 #  displayName: Docker Build Stage
