@@ -36,8 +36,8 @@ variables:
 - name: registry_url
   value: 'eminturan'
 - name: working_path
-#  value: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
-  value: '$(Build.SourcesDirectory)/${{ variables.repo_name }}'
+  value: '$(Build.Repository.LocalPath)/${{ variables.repo_name }}'
+#  value: '$(Build.SourcesDirectory)/${{ variables.repo_name }}'
 
 stages:
 - stage: CodeBuildStage
