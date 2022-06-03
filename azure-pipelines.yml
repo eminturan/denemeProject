@@ -85,6 +85,7 @@ stages:
           parameters:
              registry_url: '${{ variables.registry_url }}'
              image_name: '${{ variables.app_name }}'
+             environment: 'env'
 
 #- stage: DockerBuildStage
 #  displayName: Docker Build Stage
