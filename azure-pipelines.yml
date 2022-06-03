@@ -60,7 +60,7 @@ stages:
 - stage: DockerBuildStage
   displayName: Docker Build Stage
   dependsOn: CodeBuildStage
-  condition: and(always(), eq(variables.isMain, true))
+  condition: and(succeeded(), eq(variables.isMain, true))
   jobs:
   - job: DockerBuildJob
     pool:
@@ -73,6 +73,24 @@ stages:
            registry_url: '${{ variables.registry_url }}'
            image_name: '${{ variables.app_name }}'
 
+
+- stage: DockerPushStage
+  displayName: Docker Push Stage
+  dependsOn: DockerBuildStage
+  condition: and(succeeded(), eq(variables.isMain, true))
+  jobs:
+  - job: DockerPushJob
+    pool:
+      name: DenemeLocalPool
+    displayName: Docker Push Job
+    steps:
+      - template: ./docker-push.yml@templates
+        parameters:
+           workingDirectory: '${{ variables.working_path }}'
+           registry_url: '${{ variables.registry_url }}'
+           registry_password: '$(registry_password)'
+           registry_username: '$(registry_username)'
+           image_name: '${{ variables.app_name }}'
 
 #- stage: DockerBuildStage
 #  displayName: Docker Build Stage
